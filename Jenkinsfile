@@ -10,12 +10,12 @@ pipeline {
     }
 
     stages {
-        stage('checkout scm') {
+        stage('Checkout scm') {
             steps {
                 checkout scm
             }
         }
-        stage('checkout app') {
+        stage('Checkout app') {
             steps {
                 dir('app') {
                     git branch: env.APP_BRANCH, url: env.APP_REPO
@@ -23,15 +23,15 @@ pipeline {
                     
             }
         }
-        stage('build') {
+        stage('Build') {
         steps {
             dir('app') {
-                sh 'mvn -B -DskipTests clean'
+                sh 'mvn -B -DskipTests clean package'
             }
         }
     }
 
-    stage('build image') {
+    stage('Build Image') {
         steps {
             dir('app') {
                 sh 'docker build -t "$IMAGE_NAME" .'
