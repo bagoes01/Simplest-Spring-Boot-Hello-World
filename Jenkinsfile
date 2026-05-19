@@ -5,7 +5,7 @@ pipeline {
         APP_REPO = 'https://github.com/bagoes01/Simplest-Spring-Boot-Hello-World.git'
         APP_BRANCH = 'master'
         IMAGE_NAME = 'spring-boot-hello:local'
-        REGISTRY = 'bagoes01/spring-boot-hello:local'
+        REGISTRY = 'bagusajah/spring-boot-hello:local'
         KUBE_CONTEXT = 'docker-desktop'
         K8S_NAMESPACE = 'cicd-demo'
     }
