@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-hello
+  namespace: cicd-demo
+  labels:
+    app: spring-boot-hello
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-boot-hello
+  template:
+    metadata:
+      labels:
+        app: spring-boot-hello
+    spec:
+      containers:
+      - name: spring-boot-hello
+        image: spring-boot-hello:local
+        ports:
+        - containerPort: 8080
