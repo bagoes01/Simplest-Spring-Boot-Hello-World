@@ -4,7 +4,8 @@ pipeline {
     environment {
         APP_REPO = 'https://github.com/bagoes01/Simplest-Spring-Boot-Hello-World.git'
         APP_BRANCH = 'master'
-        IMAGE_NAME = 'host.docker.internal:5001/spring-boot-hello:local'
+        IMAGE_NAME = 'spring-boot-hello:local'
+        REGISTRY = 'host.docker.internal:5001'
         KUBE_CONTEXT = 'docker-desktop'
         K8S_NAMESPACE = 'cicd-demo'
     }
@@ -37,6 +38,17 @@ pipeline {
                 sh 'docker build -t "$IMAGE_NAME" .'
             }
         }
+    }
+
+    stage('Push Image') {
+      steps {
+        sh '''
+          set -e
+          image_repo="${REGISTRY}/spring-boot-hello:local"
+          docker tag "${IMAGE_NAME}" "${image_repo}"
+          docker push "${image_repo}"
+        '''
+      }
     }
 
     stage('deploy') {
