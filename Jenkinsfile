@@ -5,7 +5,7 @@ pipeline {
         APP_REPO = 'https://github.com/bagoes01/Simplest-Spring-Boot-Hello-World.git'
         APP_BRANCH = 'master'
         IMAGE_NAME = 'spring-boot-hello:local'
-        REGISTRY = 'bagusajah'
+        REGISTRY = 'bagoes01/spring-boot-hello:local'
         KUBE_CONTEXT = 'docker-desktop'
         K8S_NAMESPACE = 'cicd-demo'
     }
@@ -42,12 +42,14 @@ pipeline {
 
     stage('Push Image') {
       steps {
-        sh '''
-          set -e
-          image_repo="${REGISTRY}/spring-boot-hello:local"
-          docker tag "${IMAGE_NAME}" "${image_repo}"
-          docker push "${image_repo}"
-        '''
+        withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_TOKEN')]) {
+          sh '''
+            set -e
+            echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USER" --password-stdin
+            docker tag "${IMAGE_NAME}" "${REGISTRY}"
+            docker push "${REGISTRY}"
+          '''
+        }
       }
     }
 
