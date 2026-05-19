@@ -45,7 +45,7 @@ pipeline {
             sh "kubectl apply -f k8s/namespace.yaml"
             sh "kubectl apply -f k8s/deployment.yaml"
             sh "kubectl apply -f k8s/service.yaml"
-            sh "kubectl -n K8S_NAMESPACE rollout status deployment/spring-boot-hello --timeput=300s"
+            sh "kubectl -n K8S_NAMESPACE rollout status deployment/spring-boot-hello --timeout=120s"
         }
     }
 }
