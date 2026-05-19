@@ -21,9 +21,7 @@ pipeline {
                     git branch: env.APP_BRANCH, url: env.APP_REPO
             }
         }
-    }
-
-    stage('build') {
+        stage('build') {
         steps {
             dir('app') {
                 sh 'mvn -B -DskipTests clean'
@@ -48,5 +46,5 @@ pipeline {
             sh "kubectl -n K8S_NAMESPACE rollout status deployment/spring-boot-hello --timeput=300s"
         }
     }
-    }
+}
 }
