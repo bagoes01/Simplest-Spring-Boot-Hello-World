@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: spring-boot-hello
-        image: host.docker.internal:5001/spring-boot-hello:local
+        image: bagusajah/spring-boot-hello:local
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
