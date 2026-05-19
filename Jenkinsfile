@@ -17,8 +17,10 @@ pipeline {
         }
         stage('checkout app') {
             steps {
-                dir('app')
+                dir('app') {
                     git branch: env.APP_BRANCH, url: env.APP_REPO
+                }
+                    
             }
         }
         stage('build') {
